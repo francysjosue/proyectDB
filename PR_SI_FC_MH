@@ -1,0 +1,59 @@
+
+use project;
+create table IF NOT exists SERVICIOS (
+SERVICE_CLI int primary key,
+SERVICE_TYPE text not null,
+DIstribuidor int not null,
+ARMARIO varchar(7) not null,
+NAP varchar(3) not null,
+HILO int not null,
+PROVINCIA varchar(20) not null,
+CANTON varchar(20) not null,
+CALLES varchar(70) not null,
+FECHA_FACT DATE NOT NULL
+);
+
+create table if not exists CLIENTE ( 
+CED_CLI int primary key not null,
+NOMBRE_CLI varchar(50),
+NUME_CONTACT int not null,
+SALDO_CLI decimal,
+SERVICE_CLI int,
+constraint FK_SERVICE_CLI
+	foreign key (SERVICE_CLI)
+	references SERVICIOS (SERVICE_CLI)
+);
+
+create table if not exists EQUIPO
+(
+SERIAL_EQUIPO varchar(30) primary key not null,
+MARCA_EQUIPO text not null, 
+MODELO text not null,
+SERVICE_CLI int,
+constraint FK_EQUIPOS
+	foreign key (SERVICE_CLI)
+	references SERVICIOS (SERVICE_CLI)
+);
+
+create table if not exists DATA_FACT
+(
+NUM_CUENTA bigint primary key not null,
+BANCO text not null,
+TIPO_CUENTA text not null,
+CED_CLI int not null,
+ constraint FK_DATA_FACTCED_CLI
+	foreign key (CED_CLI)
+	references CLIENTE (CED_CLI)
+);
+
+create table if not exists DANO
+(
+ID_PET int primary key not null,
+TIPO_DANO text not null, 
+FECHA_ASIG date not null,
+FECHA_REPA date not null,
+SERVICE_CLI int,
+constraint FK_DANO
+	foreign key (SERVICE_CLI)
+    references SERVICIOS (SERVICE_CLI)
+);
